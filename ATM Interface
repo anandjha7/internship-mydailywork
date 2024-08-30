@@ -1,0 +1,134 @@
+Student Grade Calculator project in Java
+
+Let's outline the steps for the Student Grade Calculator project in Java:
+
+1. Import necessary libraries: We'll need `Scanner` for user input.
+2. Define main class and methods:
+    - `getMarks`: Prompts the user to enter marks for each subject and returns an array of marks.
+    - `calculateTotalMarks`: Sums up the marks obtained in all subjects.
+    - `calculateAveragePercentage`: Calculates the average percentage based on total marks and the number of subjects.
+    - `calculateGrade`: Assigns a grade based on the average percentage.
+    - `displayResults`: Displays the total marks, average percentage, and corresponding grade.
+
+3. Program logic:
+    - Get marks from the user.
+    - Calculate total marks and average percentage.
+    - Determine the grade based on the average percentage.
+    - Display the results to the user.
+
+Here is the full implementation of the Student Grade Calculator project in Java:
+
+import java.util.Scanner;
+
+// Main class to run the ATM application
+public class AtmInterface {
+    public static void main(String[] args) {
+        BankAccount account = new BankAccount(1000); // Initial balance
+        ATM atm = new ATM(account);
+        atm.start();
+    }
+}
+
+// Class representing the user's bank account
+class BankAccount {
+    private double balance;
+
+    public BankAccount(double initialBalance) {
+        this.balance = initialBalance;
+    }
+
+    public void deposit(double amount) {
+        if (amount > 0) {
+            balance += amount;
+            System.out.println("Successfully deposited $" + amount);
+        } else {
+            System.out.println("Invalid deposit amount.");
+        }
+    }
+
+    public void withdraw(double amount) {
+        if (amount > 0 && amount <= balance) {
+            balance -= amount;
+            System.out.println("Successfully withdrew $" + amount);
+        } else if (amount > balance) {
+            System.out.println("Insufficient funds.");
+        } else {
+            System.out.println("Invalid withdrawal amount.");
+        }
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+}
+
+// Class representing the ATM
+class ATM {
+    private BankAccount account;
+    private Scanner scanner;
+
+    public ATM(BankAccount account) {
+        this.account = account;
+        this.scanner = new Scanner(System.in);
+    }
+
+    public void start() {
+        while (true) {
+            displayMenu();
+            int choice = scanner.nextInt();
+            handleUserInput(choice);
+        }
+    }
+
+    private void displayMenu() {
+        System.out.println("\nATM Menu:");
+        System.out.println("1. Check Balance");
+        System.out.println("2. Deposit");
+        System.out.println("3. Withdraw");
+        System.out.println("4. Exit");
+        System.out.print("Choose an option: ");
+    }
+
+    private void handleUserInput(int choice) {
+        switch (choice) {
+            case 1:
+                checkBalance();
+                break;
+            case 2:
+                deposit();
+                break;
+            case 3:
+                withdraw();
+                break;
+            case 4:
+                exit();
+                break;
+            default:
+                System.out.println("Invalid choice. Please try again.");
+        }
+    }
+
+    private void checkBalance() {
+        System.out.println("Your current balance is $" + account.getBalance());
+    }
+
+    private void deposit() {
+        System.out.print("Enter the amount to deposit: ");
+        double amount = scanner.nextDouble();
+        account.deposit(amount);
+    }
+
+    private void withdraw() {
+        System.out.print("Enter the amount to withdraw: ");
+        double amount = scanner.nextDouble();
+        account.withdraw(amount);
+    }
+
+    private void exit() {
+        System.out.println("Thank you for using the ATM. Goodbye!");
+        System.exit(0);
+    }
+}
+
+
+
