@@ -1,2 +1,2 @@
-# internship-mydailywork
+# mydailywork
 java internship from mydailywork 
