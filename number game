@@ -1,0 +1,93 @@
+1.Let's outline the steps for the Number Game project in Java:
+
+1. Import necessary libraries: We'll need `Scanner` for user input and `Random` for generating random numbers.
+2. Define main class and methods:
+    - `generateRandomNumber`: Generates a random number within a specified range.
+    - `getUserGuess`: Prompts the user for their guess and returns it.
+    - `compareGuess`: Compares the user's guess to the generated number and returns feedback.
+    - `playRound`: Handles the logic for playing a single round of the game.
+    - `main`: Orchestrates the game flow, including multiple rounds and scoring.
+
+3. Game logic:
+    - Generate a random number.
+    - Prompt the user for a guess.
+    - Provide feedback if the guess is too high, too low, or correct.
+    - Track the number of attempts.
+    - Allow for multiple rounds and display the user's score.
+
+Here is the full implementation of the Number Game project in Java:
+
+
+
+import java.util.Random;
+import java.util.Scanner;
+
+public class Game {
+    private static final int MAX_ATTEMPTS = 10;
+    private static final int LOWER_BOUND = 1;
+    private static final int UPPER_BOUND = 100;
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int roundsPlayed = 0;
+        int totalScore = 0;
+
+        System.out.println("Welcome to the Number Guessing Game!");
+
+        while (true) {
+            roundsPlayed++;
+            int roundScore = playRound(scanner);
+            totalScore += roundScore;
+
+            System.out.println("Do you want to play another round? (yes/no)");
+            String playAgain = scanner.next();
+
+            if (!playAgain.equalsIgnoreCase("yes")) {
+                break;
+            }
+        }
+
+        System.out.println("Thank you for playing!");
+        System.out.println("Rounds played: " + roundsPlayed);
+        System.out.println("Total score: " + totalScore);
+    }
+
+    private static int playRound(Scanner scanner) {
+        Random random = new Random();
+        int numberToGuess = random.nextInt(UPPER_BOUND - LOWER_BOUND + 1) + LOWER_BOUND;
+        int attemptsLeft = MAX_ATTEMPTS;
+        int attemptsUsed = 0;
+
+        System.out.println("I have generated a number between " + LOWER_BOUND + " and " + UPPER_BOUND + ". Can you guess it?");
+        
+        while (attemptsLeft > 0) {
+            System.out.println("You have " + attemptsLeft + " attempts left. Enter your guess:");
+            int userGuess = getUserGuess(scanner);
+
+            attemptsUsed++;
+            attemptsLeft--;
+
+            if (userGuess == numberToGuess) {
+                System.out.println("Congratulations! You guessed the correct number in " + attemptsUsed + " attempts.");
+                return MAX_ATTEMPTS - attemptsUsed + 1; // Score based on attempts left
+            } else if (userGuess < numberToGuess) {
+                System.out.println("Too low!");
+            } else {
+                System.out.println("Too high!");
+            }
+        }
+
+        System.out.println("Sorry, you've used all your attempts. The correct number was: " + numberToGuess);
+        return 0; // No score if attempts are exhausted
+    }
+
+    private static int getUserGuess(Scanner scanner) {
+        while (true) {
+            try {
+                return Integer.parseInt(scanner.next());
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a valid number.");
+            }
+        }
+    }
+}
